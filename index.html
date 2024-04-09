@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles/index.css">
+    <title>The Coupler</title>
+</head>
+<body>
+    <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item has-text-weight-bold" href="#">The Coupler</a>
+            <a class="navbar-burger is-active" role="button" aria-label="menu" aria-expanded="false">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+        <div class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="#feature-envy">Feature Envy</a>
+                <a class="navbar-item" href="#inappropiate-intimancy">Inappropiate Intimancy</a>
+                <a class="navbar-item" href="#message-chain">Message Chain</a>
+                <a class="navbar-item" href="#middle-man">Middle Man</a>
+            </div>
+        </div>
+    </nav>
+    <section class="section is-small main">
+        <div class="content is-normal is-dark">
+            <h2>The Coupler</h2>
+            <p> <strong>The Coupler </strong>adalah kelompok code smell yang menyebabkan keterikatan berlebihan antara kelas-kelas 
+                atau menunjukkan apa yang terjadi jika keterikatan digantikan oleh delegasi berlebihan.</p>
+          </div>
+    </section>
+    <section class="section is-small" id="feature-envy">
+        <div class="content is-normal">
+            <h2>Feature Envy</h2>
+            <p>
+                <strong>Feature Envy</strong> adalah sebuah code smell yang di mana sebuah kelas atau modul 
+                menggunakan metode atau data dari kelas lain secara berlebihan, menunjukkan bahwa 
+                kelas yang bergantung mungkin mencoba melakukan terlalu banyak hal atau bahwa desainnya 
+                mungkin kurang terstruktur. Dengan kata lain, jika sebuah kelas atau modul menggunakan 
+                data atau metode dari kelas lain lebih dari miliknya sendiri, itu mungkin merupakan tanda 
+                bahwa kelas yang bergantung "cemburu" terhadap fitur dari kelas lain tersebut. 
+                Hal ini dapat menyebabkan keterikatan yang erat antara kelas-kelas tersebut, 
+                yang dapat membuat kode menjadi sulit untuk dipelihara dan dipahami.
+            </p>
+            <h3>Perawatan</h3>
+            <p>
+                Jika ada perubahan pada data dan fungsi yang terkait pada saat yang sama, biasanya disarankan 
+                untuk menyimpannya di tempat yang sama. Data dan fungsi yang berkaitan cenderung diubah bersamaan 
+                (meskipun ada pengecualian).
+                <ul>
+                    <li>Jika sebuah metode jelas seharusnya dipindahkan ke tempat lain, gunakanlah <strong>Move Method</strong>.</li>
+                    <li>Jika hanya sebagian dari sebuah metode yang mengakses data dari objek lain, gunakan <strong>Extract Method
+                    </strong>untuk memindahkan bagian tersebut.</li>
+                    <li>Jika sebuah metode menggunakan fungsi dari beberapa kelas lain, pertama-tama tentukan kelas mana yang 
+                        mengandung sebagian besar data yang digunakan. Kemudian tempatkan metode ini di dalam kelas tersebut bersama 
+                        dengan data yang lain. Sebagai alternatif, gunakan "Extract Method" untuk membagi metode menjadi beberapa 
+                        bagian yang dapat ditempatkan di berbagai tempat di berbagai kelas yang berbeda.</li>
+                </ul>
+            </p>
+            <h3>Keuntungan</h3>
+            <ul>
+                <li><strong>Reduksi Duplikasi Kode :</strong> Dengan menempatkan kode penanganan data di satu tempat pusat, Anda dapat 
+                    mengurangi duplikasi kode. Ini mengurangi kemungkinan adanya beberapa versi dari kode yang sama yang tersebar di 
+                    berbagai bagian proyek</li>
+                <li><strong>Organisasi Kode yang Lebih Baik :</strong> Metode untuk menangani data akan berada di dekat data aktual, 
+                    yang membuat struktur kode lebih terorganisir. Hal ini memudahkan untuk memahami hubungan antara data dan metode 
+                    yang mengoperasikannya, sehingga meningkatkan keterbacaan dan pemeliharaan kode.</li>
+            </ul>
+            <h3>Kapan Untuk Diabaibaikan</h3>
+            <p>
+                Kadang-kadang perilaku sengaja dipisahkan dari kelas yang menyimpan data. Keuntungan biasanya dari ini adalah 
+                kemampuan untuk secara dinamis mengubah perilaku
+            </p>
+            <h3>Contoh</h3>
+            <div class="columns">
+                <div class="column">
+                    <h4>Masalah</h4>
+                    <div class="card code-card">
+                        <div class="card-content">
+                          <div class="content">
+                            <pre>
+                                <code>
+                                    <strong>
+<span class="a">public class</span> <span class="b">Phone</span> <span class="c">{</span>
+    <span class="a">private final</span> <span class="d">String</span> <span class="b">unformattedNumber;</span>
+
+    <span class="a">public</span> <span class="c">Phone</span><span class="g">(</span><span class="d">String</span> <span class="b">unformattedNumber</span><span class="g">)</span> <span class="g">{</span>
+        <span class="e">this</span><span class="b">.unformattedNumber</span> <span class="d">=</span> <span class="b">unformattedNumber;</span>
+    <span class="g">}</span> 
+
+    <span class="a">public</span> <span class="d">String</span> <span class="c">getAreaCode</span><span class="g">()</span> <span class="g">{</span>
+        <span class="d">return</span> <span class="b">unformattedNumber.</span><span class="c">substring</span><span class="f">(</span><span class="c">0</span><span class="b">,</span><span class="c">3</span><span class="f">)</span><span class="b">;</span>
+    <span class="g">}</span> 
+
+    <span class="a">public</span> <span class="d">String</span> <span class="c">getPrefix</span><span class="g">()</span> <span class="g">{</span>
+        <span class="d">return</span> <span class="b">unformattedNumber.</span><span class="c">substring</span><span class="f">(</span><span class="c">3</span><span class="b">,</span><span class="c">6</span><span class="f">)</span><span class="b">;</span>
+    <span class="g">}</span> 
+
+    <span class="a">public</span> <span class="d">String</span> <span class="c">getNumber</span><span class="g">()</span> <span class="g">{</span>
+        <span class="d">return</span> <span class="b">unformattedNumber.</span><span class="c">substring</span><span class="f">(</span><span class="c">6</span><span class="b">,</span><span class="c">10</span><span class="f">)</span><span class="b">;</span>
+    <span class="g">}</span> 
+<span class="c">}</span>
+
+<span class="a">public class</span> <span class="b">Customer</span> <span class="c">{</span>
+    <span class="a">private</span> <span class="d">Phone</span> <span class="b">mobilePhone;</span>
+
+    <span class="a">public</span> <span class="d">String</span> <span class="c">getMobilePhoneNumber</span><span class="g">()</span> <span class="g">{</span>
+        <span class="d">return</span> <span class="e">"("</span> <span class="d">+</span>
+            <span class="b">mobilePhone.</span><span class="c">getAreaCode</span><span class="a">()</span> <span class="d">+</span> <span class="e">") "</span> <span class="d">+</span>
+            <span class="b">mobilePhone.</span><span class="c">getPrefix</span><span class="a">()</span> <span class="d">+</span> <span class="e">"-"</span> <span class="d">+</span>
+            <span class="b">mobilePhone.</span><span class="c">getNumber</span><span class="a">()</span><span class="b">;</span>
+    <span class="g">}</span> 
+<span class="c">}</span>  
+                                    </strong>        
+                                </code>
+                            </pre>
+                          </div>
+                        </div>
+                      </div>
+                </div>
+                <div class="column">
+                    <h4>Solusi</h4>
+                    <div class="card code-card">
+                        <div class="card-content">
+                          <div class="content">
+                            <pre>
+                                <code>
+                                    <strong>
+ <span class="a">public class</span> <span class="b">Phone</span> <span class="c">{</span>
+    <span class="a">private final</span> <span class="d">String</span> <span class="b">unformattedNumber;</span>	
+    
+    <span class="a">public</span> <span class="c">Phone</span><span class="g">(</span><span class="d">String</span> <span class="b">unformattedNumber</span><span class="g">)</span> <span class="g">{</span>
+        <span class="e">this</span><span class="b">.unformattedNumber</span> <span class="d">=</span> <span class="b">unformattedNumber;</span>
+    <span class="g">}</span> 
+    
+    <span class="a">public</span> <span class="d">String</span> <span class="c">getAreaCode</span><span class="g">()</span> <span class="g">{</span>
+        <span class="d">return</span> <span class="b">unformattedNumber.</span><span class="c">substring</span><span class="f">(</span><span class="c">0</span><span class="b">,</span><span class="c">3</span><span class="f">)</span><span class="b">;</span>
+    <span class="g">}</span> 
+
+    <span class="a">public</span> <span class="d">String</span> <span class="c">getPrefix</span><span class="g">()</span> <span class="g">{</span>
+        <span class="d">return</span> <span class="b">unformattedNumber.</span><span class="c">substring</span><span class="f">(</span><span class="c">3</span><span class="b">,</span><span class="c">6</span><span class="f">)</span><span class="b">;</span>
+    <span class="g">}</span> 
+
+    <span class="a">public</span> <span class="d">String</span> <span class="c">getNumber</span><span class="g">()</span> <span class="g">{</span>
+        <span class="d">return</span> <span class="b">unformattedNumber.</span><span class="c">substring</span><span class="f">(</span><span class="c">6</span><span class="b">,</span><span class="c">10</span><span class="f">)</span><span class="b">;</span>
+    <span class="g">}</span> 
+        
+    <span class="a">public</span> <span class="d">String</span> <span class="c">getFormattedNumber</span><span class="g">()</span> <span class="g">{</span>
+        <span class="d">return</span> <span class="e">"("</span> <span class="d">+</span> <span class="c">getAreaCode</span><span class="a">()</span> <span class="d">+</span> <span class="e">") "</span> <span class="d">+</span> <span class="c">getPrefix</span><span class="a">()</span> <span class="d">+</span> <span class="e">"-"</span> <span class="d">+</span> <span class="c">getNumber</span><span class="a">()</span><span class="b">;</span> 
+    <span class="g">}</span>
+<span class="c">}</span>  
+
+<span class="a">public class</span> <span class="b">Customer</span> <span class="c">{</span>
+    <span class="a">private</span> <span class="d">Phone</span> <span class="b">mobilePhone;</span>	
+    
+    <span class="a">public</span> <span class="d">String</span> <span class="c">getMobilePhoneNumber</span><span class="g">()</span> <span class="g">{</span>
+        <span class="d">return</span> <span class="b">mobilePhone.</span><span class="c">getFormattedNumber</span><span class="a">()</span><span class="b">;</span>
+    <span class="g">}</span>
+<span class="c">}</span>                
+                                    </strong>                  
+                                </code>
+                            </pre>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p> 
+                Dalam contoh ini, kelas <code><strong>Customer</strong></code> menggunakan metode kelas Phone secara berlebihan, 
+                yang merupakan tanda "Feature Envy". Ini dapat menyebabkan tingkat keterikatan yang 
+                tinggi antara kedua kelas tersebut dan duplikasi kode yang tidak perlu.
+            </p>
+            <p>
+                Untuk mengatasi masalah kode ini, salah satu solusinya adalah memindahkan metode 
+                <code><strong>getMobilePhoneNumber</strong></code> ke kelas <code><strong>Phone</strong></code> dan memodifikasinya 
+                agar mengembalikan nomor telepon yang diformat secara langsung. Kita memindahkan metode <code><strong>getFormattedNumber</strong></code> dari kelas 
+                <code><strong>Customer</strong></code> ke kelas <code><strong>Phone</strong></code>. Dengan cara ini, kelas <code><strong>Phone</strong></code> bertanggung jawab untuk 
+                memformat nomor teleponnya sendiri, yang mengatasi masalah "Feature Envy" dalam kode. Kelas 
+                Customer sekarang hanya memanggil metode getFormattedNumber pada objek Phone untuk 
+                mendapatkan nomor telepon yang diformat.
+            </p>
+          </div>
+    </section>
+    <section class="section is-small" id="inappropiate-intimancy">
+        <div class="content is-normal">
+            <h2>Inappropiate Intimancy</h2>
+            <p>
+                <strong>Inappropriate intimacy</strong> adalah code smell yang terjadi ketika kelas atau modul terlalu erat 
+                terkait, menyebabkan interaksi atau ketergantungan yang berlebihan. Hal ini dapat 
+                mengakibatkan fleksibilitas yang berkurang, tantangan pemeliharaan yang meningkat, dan 
+                kesulitan dalam pengujian dan pemahaman kode.
+            <h3>Perawatan</h3>
+            <p>
+                Jika ada perubahan pada data dan fungsi yang terkait pada saat yang sama, biasanya disarankan 
+                untuk menyimpannya di tempat yang sama. Data dan fungsi yang berkaitan cenderung diubah bersamaan 
+                (meskipun ada pengecualian).
+                <ul>
+                    <li>Jika sebuah metode jelas seharusnya dipindahkan ke tempat lain, gunakanlah <strong>Move Method</strong>.</li>
+                    <li>Jika hanya sebagian dari sebuah metode yang mengakses data dari objek lain, gunakan <strong>Extract Method
+                    </strong>untuk memindahkan bagian tersebut.</li>
+                    <li>Jika sebuah metode menggunakan fungsi dari beberapa kelas lain, pertama-tama tentukan kelas mana yang 
+                        mengandung sebagian besar data yang digunakan. Kemudian tempatkan metode ini di dalam kelas tersebut bersama 
+                        dengan data yang lain. Sebagai alternatif, gunakan "Extract Method" untuk membagi metode menjadi beberapa 
+                        bagian yang dapat ditempatkan di berbagai tempat di berbagai kelas yang berbeda.</li>
+                </ul>
+            </p>
+            <h3>Keuntungan</h3>
+            <ul>
+                <li><strong>Reduksi Duplikasi Kode :</strong> Dengan menempatkan kode penanganan data di satu tempat pusat, Anda dapat 
+                    mengurangi duplikasi kode. Ini mengurangi kemungkinan adanya beberapa versi dari kode yang sama yang tersebar di 
+                    berbagai bagian proyek</li>
+                <li><strong>Organisasi Kode yang Lebih Baik :</strong> Metode untuk menangani data akan berada di dekat data aktual, 
+                    yang membuat struktur kode lebih terorganisir. Hal ini memudahkan untuk memahami hubungan antara data dan metode 
+                    yang mengoperasikannya, sehingga meningkatkan keterbacaan dan pemeliharaan kode.</li>
+            </ul>
+            <h3>Kapan Untuk Diabaibaikan</h3>
+            <p>
+                Kadang-kadang perilaku sengaja dipisahkan dari kelas yang menyimpan data. Keuntungan biasanya dari ini adalah 
+                kemampuan untuk secara dinamis mengubah perilaku
+            </p>
+            <h3>Contoh</h3>
+            <div class="columns">
+                <div class="column">
+                    <h4>Masalah</h4>
+                    <div class="card code-card">
+                        <div class="card-content">
+                          <div class="content">
+                            <pre>
+                                <code>
+                                    <strong>
+<span class="a">public class</span> <span class="b">Phone</span> <span class="c">{</span>
+    <span class="a">private final</span> <span class="d">String</span> <span class="b">unformattedNumber;</span>
+
+    <span class="a">public</span> <span class="c">Phone</span><span class="g">(</span><span class="d">String</span> <span class="b">unformattedNumber</span><span class="g">)</span> <span class="g">{</span>
+        <span class="e">this</span><span class="b">.unformattedNumber</span> <span class="d">=</span> <span class="b">unformattedNumber;</span>
+    <span class="g">}</span> 
+
+    <span class="a">public</span> <span class="d">String</span> <span class="c">getAreaCode</span><span class="g">()</span> <span class="g">{</span>
+        <span class="d">return</span> <span class="b">unformattedNumber.</span><span class="c">substring</span><span class="f">(</span><span class="c">0</span><span class="b">,</span><span class="c">3</span><span class="f">)</span><span class="b">;</span>
+    <span class="g">}</span> 
+
+    <span class="a">public</span> <span class="d">String</span> <span class="c">getPrefix</span><span class="g">()</span> <span class="g">{</span>
+        <span class="d">return</span> <span class="b">unformattedNumber.</span><span class="c">substring</span><span class="f">(</span><span class="c">3</span><span class="b">,</span><span class="c">6</span><span class="f">)</span><span class="b">;</span>
+    <span class="g">}</span> 
+
+    <span class="a">public</span> <span class="d">String</span> <span class="c">getNumber</span><span class="g">()</span> <span class="g">{</span>
+        <span class="d">return</span> <span class="b">unformattedNumber.</span><span class="c">substring</span><span class="f">(</span><span class="c">6</span><span class="b">,</span><span class="c">10</span><span class="f">)</span><span class="b">;</span>
+    <span class="g">}</span> 
+<span class="c">}</span>
+
+<span class="a">public class</span> <span class="b">Customer</span> <span class="c">{</span>
+    <span class="a">private</span> <span class="d">Phone</span> <span class="b">mobilePhone;</span>
+
+    <span class="a">public</span> <span class="d">String</span> <span class="c">getMobilePhoneNumber</span><span class="g">()</span> <span class="g">{</span>
+        <span class="d">return</span> <span class="e">"("</span> <span class="d">+</span>
+            <span class="b">mobilePhone.</span><span class="c">getAreaCode</span><span class="a">()</span> <span class="d">+</span> <span class="e">") "</span> <span class="d">+</span>
+            <span class="b">mobilePhone.</span><span class="c">getPrefix</span><span class="a">()</span> <span class="d">+</span> <span class="e">"-"</span> <span class="d">+</span>
+            <span class="b">mobilePhone.</span><span class="c">getNumber</span><span class="a">()</span><span class="b">;</span>
+    <span class="g">}</span> 
+<span class="c">}</span>  
+                                    </strong>        
+                                </code>
+                            </pre>
+                          </div>
+                        </div>
+                      </div>
+                </div>
+                <div class="column">
+                    <h4>Solusi</h4>
+                    <div class="card code-card">
+                        <div class="card-content">
+                          <div class="content">
+                            <pre>
+                                <code>
+                                    <strong>
+ <span class="a">public class</span> <span class="b">Phone</span> <span class="c">{</span>
+    <span class="a">private final</span> <span class="d">String</span> <span class="b">unformattedNumber;</span>	
+    
+    <span class="a">public</span> <span class="c">Phone</span><span class="g">(</span><span class="d">String</span> <span class="b">unformattedNumber</span><span class="g">)</span> <span class="g">{</span>
+        <span class="e">this</span><span class="b">.unformattedNumber</span> <span class="d">=</span> <span class="b">unformattedNumber;</span>
+    <span class="g">}</span> 
+    
+    <span class="a">public</span> <span class="d">String</span> <span class="c">getAreaCode</span><span class="g">()</span> <span class="g">{</span>
+        <span class="d">return</span> <span class="b">unformattedNumber.</span><span class="c">substring</span><span class="f">(</span><span class="c">0</span><span class="b">,</span><span class="c">3</span><span class="f">)</span><span class="b">;</span>
+    <span class="g">}</span> 
+
+    <span class="a">public</span> <span class="d">String</span> <span class="c">getPrefix</span><span class="g">()</span> <span class="g">{</span>
+        <span class="d">return</span> <span class="b">unformattedNumber.</span><span class="c">substring</span><span class="f">(</span><span class="c">3</span><span class="b">,</span><span class="c">6</span><span class="f">)</span><span class="b">;</span>
+    <span class="g">}</span> 
+
+    <span class="a">public</span> <span class="d">String</span> <span class="c">getNumber</span><span class="g">()</span> <span class="g">{</span>
+        <span class="d">return</span> <span class="b">unformattedNumber.</span><span class="c">substring</span><span class="f">(</span><span class="c">6</span><span class="b">,</span><span class="c">10</span><span class="f">)</span><span class="b">;</span>
+    <span class="g">}</span> 
+        
+    <span class="a">public</span> <span class="d">String</span> <span class="c">getFormattedNumber</span><span class="g">()</span> <span class="g">{</span>
+        <span class="d">return</span> <span class="e">"("</span> <span class="d">+</span> <span class="c">getAreaCode</span><span class="a">()</span> <span class="d">+</span> <span class="e">") "</span> <span class="d">+</span> <span class="c">getPrefix</span><span class="a">()</span> <span class="d">+</span> <span class="e">"-"</span> <span class="d">+</span> <span class="c">getNumber</span><span class="a">()</span><span class="b">;</span> 
+    <span class="g">}</span>
+<span class="c">}</span>  
+
+<span class="a">public class</span> <span class="b">Customer</span> <span class="c">{</span>
+    <span class="a">private</span> <span class="d">Phone</span> <span class="b">mobilePhone;</span>	
+    
+    <span class="a">public</span> <span class="d">String</span> <span class="c">getMobilePhoneNumber</span><span class="g">()</span> <span class="g">{</span>
+        <span class="d">return</span> <span class="b">mobilePhone.</span><span class="c">getFormattedNumber</span><span class="a">()</span><span class="b">;</span>
+    <span class="g">}</span>
+<span class="c">}</span>                
+                                    </strong>                  
+                                </code>
+                            </pre>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p> 
+                Dalam contoh ini, kelas <code><strong>Customer</strong></code> menggunakan metode kelas Phone secara berlebihan, 
+                yang merupakan tanda "Feature Envy". Ini dapat menyebabkan tingkat keterikatan yang 
+                tinggi antara kedua kelas tersebut dan duplikasi kode yang tidak perlu.
+            </p>
+            <p>
+                Untuk mengatasi masalah kode ini, salah satu solusinya adalah memindahkan metode 
+                <code><strong>getMobilePhoneNumber</strong></code> ke kelas <code><strong>Phone</strong></code> dan memodifikasinya 
+                agar mengembalikan nomor telepon yang diformat secara langsung. Kita memindahkan metode <code><strong>getFormattedNumber</strong></code> dari kelas 
+                <code><strong>Customer</strong></code> ke kelas <code><strong>Phone</strong></code>. Dengan cara ini, kelas <code><strong>Phone</strong></code> bertanggung jawab untuk 
+                memformat nomor teleponnya sendiri, yang mengatasi masalah "Feature Envy" dalam kode. Kelas 
+                Customer sekarang hanya memanggil metode getFormattedNumber pada objek Phone untuk 
+                mendapatkan nomor telepon yang diformat.
+            </p>
+          </div>
+    </section>
+    <section class="section is-small" id="Feature Envy">
+        <div class="content is-normal">
+            <h2>Feature Envy</h2>
+            <p>
+                <strong>Feature Envy</strong> adalah sebuah code smell yang di mana sebuah kelas atau modul 
+                menggunakan metode atau data dari kelas lain secara berlebihan, menunjukkan bahwa 
+                kelas yang bergantung mungkin mencoba melakukan terlalu banyak hal atau bahwa desainnya 
+                mungkin kurang terstruktur. Dengan kata lain, jika sebuah kelas atau modul menggunakan 
+                data atau metode dari kelas lain lebih dari miliknya sendiri, itu mungkin merupakan tanda 
+                bahwa kelas yang bergantung "cemburu" terhadap fitur dari kelas lain tersebut. 
+                Hal ini dapat menyebabkan keterikatan yang erat antara kelas-kelas tersebut, 
+                yang dapat membuat kode menjadi sulit untuk dipelihara dan dipahami.
+            </p>
+            <h3>Perawatan</h3>
+            <p>
+                Jika ada perubahan pada data dan fungsi yang terkait pada saat yang sama, biasanya disarankan 
+                untuk menyimpannya di tempat yang sama. Data dan fungsi yang berkaitan cenderung diubah bersamaan 
+                (meskipun ada pengecualian).
+                <ul>
+                    <li>Jika sebuah metode jelas seharusnya dipindahkan ke tempat lain, gunakanlah <strong>Move Method</strong>.</li>
+                    <li>Jika hanya sebagian dari sebuah metode yang mengakses data dari objek lain, gunakan <strong>Extract Method
+                    </strong>untuk memindahkan bagian tersebut.</li>
+                    <li>Jika sebuah metode menggunakan fungsi dari beberapa kelas lain, pertama-tama tentukan kelas mana yang 
+                        mengandung sebagian besar data yang digunakan. Kemudian tempatkan metode ini di dalam kelas tersebut bersama 
+                        dengan data yang lain. Sebagai alternatif, gunakan "Extract Method" untuk membagi metode menjadi beberapa 
+                        bagian yang dapat ditempatkan di berbagai tempat di berbagai kelas yang berbeda.</li>
+                </ul>
+            </p>
+            <h3>Keuntungan</h3>
+            <ul>
+                <li><strong>Reduksi Duplikasi Kode :</strong> Dengan menempatkan kode penanganan data di satu tempat pusat, Anda dapat 
+                    mengurangi duplikasi kode. Ini mengurangi kemungkinan adanya beberapa versi dari kode yang sama yang tersebar di 
+                    berbagai bagian proyek</li>
+                <li><strong>Organisasi Kode yang Lebih Baik :</strong> Metode untuk menangani data akan berada di dekat data aktual, 
+                    yang membuat struktur kode lebih terorganisir. Hal ini memudahkan untuk memahami hubungan antara data dan metode 
+                    yang mengoperasikannya, sehingga meningkatkan keterbacaan dan pemeliharaan kode.</li>
+            </ul>
+            <h3>Kapan Untuk Diabaibaikan</h3>
+            <p>
+                Kadang-kadang perilaku sengaja dipisahkan dari kelas yang menyimpan data. Keuntungan biasanya dari ini adalah 
+                kemampuan untuk secara dinamis mengubah perilaku
+            </p>
+            <h3>Contoh</h3>
+            <div class="columns">
+                <div class="column">
+                    <h4>Masalah</h4>
+                    <div class="card code-card">
+                        <div class="card-content">
+                          <div class="content">
+                            <pre>
+                                <code>
+                                    <strong>
+<span class="a">public class</span> <span class="b">Phone</span> <span class="c">{</span>
+    <span class="a">private final</span> <span class="d">String</span> <span class="b">unformattedNumber;</span>
+
+    <span class="a">public</span> <span class="c">Phone</span><span class="g">(</span><span class="d">String</span> <span class="b">unformattedNumber</span><span class="g">)</span> <span class="g">{</span>
+        <span class="e">this</span><span class="b">.unformattedNumber</span> <span class="d">=</span> <span class="b">unformattedNumber;</span>
+    <span class="g">}</span> 
+
+    <span class="a">public</span> <span class="d">String</span> <span class="c">getAreaCode</span><span class="g">()</span> <span class="g">{</span>
+        <span class="d">return</span> <span class="b">unformattedNumber.</span><span class="c">substring</span><span class="f">(</span><span class="c">0</span><span class="b">,</span><span class="c">3</span><span class="f">)</span><span class="b">;</span>
+    <span class="g">}</span> 
+
+    <span class="a">public</span> <span class="d">String</span> <span class="c">getPrefix</span><span class="g">()</span> <span class="g">{</span>
+        <span class="d">return</span> <span class="b">unformattedNumber.</span><span class="c">substring</span><span class="f">(</span><span class="c">3</span><span class="b">,</span><span class="c">6</span><span class="f">)</span><span class="b">;</span>
+    <span class="g">}</span> 
+
+    <span class="a">public</span> <span class="d">String</span> <span class="c">getNumber</span><span class="g">()</span> <span class="g">{</span>
+        <span class="d">return</span> <span class="b">unformattedNumber.</span><span class="c">substring</span><span class="f">(</span><span class="c">6</span><span class="b">,</span><span class="c">10</span><span class="f">)</span><span class="b">;</span>
+    <span class="g">}</span> 
+<span class="c">}</span>
+
+<span class="a">public class</span> <span class="b">Customer</span> <span class="c">{</span>
+    <span class="a">private</span> <span class="d">Phone</span> <span class="b">mobilePhone;</span>
+
+    <span class="a">public</span> <span class="d">String</span> <span class="c">getMobilePhoneNumber</span><span class="g">()</span> <span class="g">{</span>
+        <span class="d">return</span> <span class="e">"("</span> <span class="d">+</span>
+            <span class="b">mobilePhone.</span><span class="c">getAreaCode</span><span class="a">()</span> <span class="d">+</span> <span class="e">") "</span> <span class="d">+</span>
+            <span class="b">mobilePhone.</span><span class="c">getPrefix</span><span class="a">()</span> <span class="d">+</span> <span class="e">"-"</span> <span class="d">+</span>
+            <span class="b">mobilePhone.</span><span class="c">getNumber</span><span class="a">()</span><span class="b">;</span>
+    <span class="g">}</span> 
+<span class="c">}</span>  
+                                    </strong>        
+                                </code>
+                            </pre>
+                          </div>
+                        </div>
+                      </div>
+                </div>
+                <div class="column">
+                    <h4>Solusi</h4>
+                    <div class="card code-card">
+                        <div class="card-content">
+                          <div class="content">
+                            <pre>
+                                <code>
+                                    <strong>
+ <span class="a">public class</span> <span class="b">Phone</span> <span class="c">{</span>
+    <span class="a">private final</span> <span class="d">String</span> <span class="b">unformattedNumber;</span>	
+    
+    <span class="a">public</span> <span class="c">Phone</span><span class="g">(</span><span class="d">String</span> <span class="b">unformattedNumber</span><span class="g">)</span> <span class="g">{</span>
+        <span class="e">this</span><span class="b">.unformattedNumber</span> <span class="d">=</span> <span class="b">unformattedNumber;</span>
+    <span class="g">}</span> 
+    
+    <span class="a">public</span> <span class="d">String</span> <span class="c">getAreaCode</span><span class="g">()</span> <span class="g">{</span>
+        <span class="d">return</span> <span class="b">unformattedNumber.</span><span class="c">substring</span><span class="f">(</span><span class="c">0</span><span class="b">,</span><span class="c">3</span><span class="f">)</span><span class="b">;</span>
+    <span class="g">}</span> 
+
+    <span class="a">public</span> <span class="d">String</span> <span class="c">getPrefix</span><span class="g">()</span> <span class="g">{</span>
+        <span class="d">return</span> <span class="b">unformattedNumber.</span><span class="c">substring</span><span class="f">(</span><span class="c">3</span><span class="b">,</span><span class="c">6</span><span class="f">)</span><span class="b">;</span>
+    <span class="g">}</span> 
+
+    <span class="a">public</span> <span class="d">String</span> <span class="c">getNumber</span><span class="g">()</span> <span class="g">{</span>
+        <span class="d">return</span> <span class="b">unformattedNumber.</span><span class="c">substring</span><span class="f">(</span><span class="c">6</span><span class="b">,</span><span class="c">10</span><span class="f">)</span><span class="b">;</span>
+    <span class="g">}</span> 
+        
+    <span class="a">public</span> <span class="d">String</span> <span class="c">getFormattedNumber</span><span class="g">()</span> <span class="g">{</span>
+        <span class="d">return</span> <span class="e">"("</span> <span class="d">+</span> <span class="c">getAreaCode</span><span class="a">()</span> <span class="d">+</span> <span class="e">") "</span> <span class="d">+</span> <span class="c">getPrefix</span><span class="a">()</span> <span class="d">+</span> <span class="e">"-"</span> <span class="d">+</span> <span class="c">getNumber</span><span class="a">()</span><span class="b">;</span> 
+    <span class="g">}</span>
+<span class="c">}</span>  
+
+<span class="a">public class</span> <span class="b">Customer</span> <span class="c">{</span>
+    <span class="a">private</span> <span class="d">Phone</span> <span class="b">mobilePhone;</span>	
+    
+    <span class="a">public</span> <span class="d">String</span> <span class="c">getMobilePhoneNumber</span><span class="g">()</span> <span class="g">{</span>
+        <span class="d">return</span> <span class="b">mobilePhone.</span><span class="c">getFormattedNumber</span><span class="a">()</span><span class="b">;</span>
+    <span class="g">}</span>
+<span class="c">}</span>                
+                                    </strong>                  
+                                </code>
+                            </pre>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p> 
+                Dalam contoh ini, kelas <code><strong>Customer</strong></code> menggunakan metode kelas Phone secara berlebihan, 
+                yang merupakan tanda "Feature Envy". Ini dapat menyebabkan tingkat keterikatan yang 
+                tinggi antara kedua kelas tersebut dan duplikasi kode yang tidak perlu.
+            </p>
+            <p>
+                Untuk mengatasi masalah kode ini, salah satu solusinya adalah memindahkan metode 
+                <code><strong>getMobilePhoneNumber</strong></code> ke kelas <code><strong>Phone</strong></code> dan memodifikasinya 
+                agar mengembalikan nomor telepon yang diformat secara langsung. Kita memindahkan metode <code><strong>getFormattedNumber</strong></code> dari kelas 
+                <code><strong>Customer</strong></code> ke kelas <code><strong>Phone</strong></code>. Dengan cara ini, kelas <code><strong>Phone</strong></code> bertanggung jawab untuk 
+                memformat nomor teleponnya sendiri, yang mengatasi masalah "Feature Envy" dalam kode. Kelas 
+                Customer sekarang hanya memanggil metode getFormattedNumber pada objek Phone untuk 
+                mendapatkan nomor telepon yang diformat.
+            </p>
+          </div>
+    </section>
+    <section class="section is-small" id="Feature Envy">
+        <div class="content is-normal">
+            <h2>Feature Envy</h2>
+            <p>
+                <strong>Feature Envy</strong> adalah sebuah code smell yang di mana sebuah kelas atau modul 
+                menggunakan metode atau data dari kelas lain secara berlebihan, menunjukkan bahwa 
+                kelas yang bergantung mungkin mencoba melakukan terlalu banyak hal atau bahwa desainnya 
+                mungkin kurang terstruktur. Dengan kata lain, jika sebuah kelas atau modul menggunakan 
+                data atau metode dari kelas lain lebih dari miliknya sendiri, itu mungkin merupakan tanda 
+                bahwa kelas yang bergantung "cemburu" terhadap fitur dari kelas lain tersebut. 
+                Hal ini dapat menyebabkan keterikatan yang erat antara kelas-kelas tersebut, 
+                yang dapat membuat kode menjadi sulit untuk dipelihara dan dipahami.
+            </p>
+            <h3>Perawatan</h3>
+            <p>
+                Jika ada perubahan pada data dan fungsi yang terkait pada saat yang sama, biasanya disarankan 
+                untuk menyimpannya di tempat yang sama. Data dan fungsi yang berkaitan cenderung diubah bersamaan 
+                (meskipun ada pengecualian).
+                <ul>
+                    <li>Jika sebuah metode jelas seharusnya dipindahkan ke tempat lain, gunakanlah <strong>Move Method</strong>.</li>
+                    <li>Jika hanya sebagian dari sebuah metode yang mengakses data dari objek lain, gunakan <strong>Extract Method
+                    </strong>untuk memindahkan bagian tersebut.</li>
+                    <li>Jika sebuah metode menggunakan fungsi dari beberapa kelas lain, pertama-tama tentukan kelas mana yang 
+                        mengandung sebagian besar data yang digunakan. Kemudian tempatkan metode ini di dalam kelas tersebut bersama 
+                        dengan data yang lain. Sebagai alternatif, gunakan "Extract Method" untuk membagi metode menjadi beberapa 
+                        bagian yang dapat ditempatkan di berbagai tempat di berbagai kelas yang berbeda.</li>
+                </ul>
+            </p>
+            <h3>Keuntungan</h3>
+            <ul>
+                <li><strong>Reduksi Duplikasi Kode :</strong> Dengan menempatkan kode penanganan data di satu tempat pusat, Anda dapat 
+                    mengurangi duplikasi kode. Ini mengurangi kemungkinan adanya beberapa versi dari kode yang sama yang tersebar di 
+                    berbagai bagian proyek</li>
+                <li><strong>Organisasi Kode yang Lebih Baik :</strong> Metode untuk menangani data akan berada di dekat data aktual, 
+                    yang membuat struktur kode lebih terorganisir. Hal ini memudahkan untuk memahami hubungan antara data dan metode 
+                    yang mengoperasikannya, sehingga meningkatkan keterbacaan dan pemeliharaan kode.</li>
+            </ul>
+            <h3>Kapan Untuk Diabaibaikan</h3>
+            <p>
+                Kadang-kadang perilaku sengaja dipisahkan dari kelas yang menyimpan data. Keuntungan biasanya dari ini adalah 
+                kemampuan untuk secara dinamis mengubah perilaku
+            </p>
+            <h3>Contoh</h3>
+            <div class="columns">
+                <div class="column">
+                    <h4>Masalah</h4>
+                    <div class="card code-card">
+                        <div class="card-content">
+                          <div class="content">
+                            <pre>
+                                <code>
+                                    <strong>
+<span class="a">public class</span> <span class="b">Phone</span> <span class="c">{</span>
+    <span class="a">private final</span> <span class="d">String</span> <span class="b">unformattedNumber;</span>
+
+    <span class="a">public</span> <span class="c">Phone</span><span class="g">(</span><span class="d">String</span> <span class="b">unformattedNumber</span><span class="g">)</span> <span class="g">{</span>
+        <span class="e">this</span><span class="b">.unformattedNumber</span> <span class="d">=</span> <span class="b">unformattedNumber;</span>
+    <span class="g">}</span> 
+
+    <span class="a">public</span> <span class="d">String</span> <span class="c">getAreaCode</span><span class="g">()</span> <span class="g">{</span>
+        <span class="d">return</span> <span class="b">unformattedNumber.</span><span class="c">substring</span><span class="f">(</span><span class="c">0</span><span class="b">,</span><span class="c">3</span><span class="f">)</span><span class="b">;</span>
+    <span class="g">}</span> 
+
+    <span class="a">public</span> <span class="d">String</span> <span class="c">getPrefix</span><span class="g">()</span> <span class="g">{</span>
+        <span class="d">return</span> <span class="b">unformattedNumber.</span><span class="c">substring</span><span class="f">(</span><span class="c">3</span><span class="b">,</span><span class="c">6</span><span class="f">)</span><span class="b">;</span>
+    <span class="g">}</span> 
+
+    <span class="a">public</span> <span class="d">String</span> <span class="c">getNumber</span><span class="g">()</span> <span class="g">{</span>
+        <span class="d">return</span> <span class="b">unformattedNumber.</span><span class="c">substring</span><span class="f">(</span><span class="c">6</span><span class="b">,</span><span class="c">10</span><span class="f">)</span><span class="b">;</span>
+    <span class="g">}</span> 
+<span class="c">}</span>
+
+<span class="a">public class</span> <span class="b">Customer</span> <span class="c">{</span>
+    <span class="a">private</span> <span class="d">Phone</span> <span class="b">mobilePhone;</span>
+
+    <span class="a">public</span> <span class="d">String</span> <span class="c">getMobilePhoneNumber</span><span class="g">()</span> <span class="g">{</span>
+        <span class="d">return</span> <span class="e">"("</span> <span class="d">+</span>
+            <span class="b">mobilePhone.</span><span class="c">getAreaCode</span><span class="a">()</span> <span class="d">+</span> <span class="e">") "</span> <span class="d">+</span>
+            <span class="b">mobilePhone.</span><span class="c">getPrefix</span><span class="a">()</span> <span class="d">+</span> <span class="e">"-"</span> <span class="d">+</span>
+            <span class="b">mobilePhone.</span><span class="c">getNumber</span><span class="a">()</span><span class="b">;</span>
+    <span class="g">}</span> 
+<span class="c">}</span>  
+                                    </strong>        
+                                </code>
+                            </pre>
+                          </div>
+                        </div>
+                      </div>
+                </div>
+                <div class="column">
+                    <h4>Solusi</h4>
+                    <div class="card code-card">
+                        <div class="card-content">
+                          <div class="content">
+                            <pre>
+                                <code>
+                                    <strong>
+ <span class="a">public class</span> <span class="b">Phone</span> <span class="c">{</span>
+    <span class="a">private final</span> <span class="d">String</span> <span class="b">unformattedNumber;</span>	
+    
+    <span class="a">public</span> <span class="c">Phone</span><span class="g">(</span><span class="d">String</span> <span class="b">unformattedNumber</span><span class="g">)</span> <span class="g">{</span>
+        <span class="e">this</span><span class="b">.unformattedNumber</span> <span class="d">=</span> <span class="b">unformattedNumber;</span>
+    <span class="g">}</span> 
+    
+    <span class="a">public</span> <span class="d">String</span> <span class="c">getAreaCode</span><span class="g">()</span> <span class="g">{</span>
+        <span class="d">return</span> <span class="b">unformattedNumber.</span><span class="c">substring</span><span class="f">(</span><span class="c">0</span><span class="b">,</span><span class="c">3</span><span class="f">)</span><span class="b">;</span>
+    <span class="g">}</span> 
+
+    <span class="a">public</span> <span class="d">String</span> <span class="c">getPrefix</span><span class="g">()</span> <span class="g">{</span>
+        <span class="d">return</span> <span class="b">unformattedNumber.</span><span class="c">substring</span><span class="f">(</span><span class="c">3</span><span class="b">,</span><span class="c">6</span><span class="f">)</span><span class="b">;</span>
+    <span class="g">}</span> 
+
+    <span class="a">public</span> <span class="d">String</span> <span class="c">getNumber</span><span class="g">()</span> <span class="g">{</span>
+        <span class="d">return</span> <span class="b">unformattedNumber.</span><span class="c">substring</span><span class="f">(</span><span class="c">6</span><span class="b">,</span><span class="c">10</span><span class="f">)</span><span class="b">;</span>
+    <span class="g">}</span> 
+        
+    <span class="a">public</span> <span class="d">String</span> <span class="c">getFormattedNumber</span><span class="g">()</span> <span class="g">{</span>
+        <span class="d">return</span> <span class="e">"("</span> <span class="d">+</span> <span class="c">getAreaCode</span><span class="a">()</span> <span class="d">+</span> <span class="e">") "</span> <span class="d">+</span> <span class="c">getPrefix</span><span class="a">()</span> <span class="d">+</span> <span class="e">"-"</span> <span class="d">+</span> <span class="c">getNumber</span><span class="a">()</span><span class="b">;</span> 
+    <span class="g">}</span>
+<span class="c">}</span>  
+
+<span class="a">public class</span> <span class="b">Customer</span> <span class="c">{</span>
+    <span class="a">private</span> <span class="d">Phone</span> <span class="b">mobilePhone;</span>	
+    
+    <span class="a">public</span> <span class="d">String</span> <span class="c">getMobilePhoneNumber</span><span class="g">()</span> <span class="g">{</span>
+        <span class="d">return</span> <span class="b">mobilePhone.</span><span class="c">getFormattedNumber</span><span class="a">()</span><span class="b">;</span>
+    <span class="g">}</span>
+<span class="c">}</span>                
+                                    </strong>                  
+                                </code>
+                            </pre>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p> 
+                Dalam contoh ini, kelas <code><strong>Customer</strong></code> menggunakan metode kelas Phone secara berlebihan, 
+                yang merupakan tanda "Feature Envy". Ini dapat menyebabkan tingkat keterikatan yang 
+                tinggi antara kedua kelas tersebut dan duplikasi kode yang tidak perlu.
+            </p>
+            <p>
+                Untuk mengatasi masalah kode ini, salah satu solusinya adalah memindahkan metode 
+                <code><strong>getMobilePhoneNumber</strong></code> ke kelas <code><strong>Phone</strong></code> dan memodifikasinya 
+                agar mengembalikan nomor telepon yang diformat secara langsung. Kita memindahkan metode <code><strong>getFormattedNumber</strong></code> dari kelas 
+                <code><strong>Customer</strong></code> ke kelas <code><strong>Phone</strong></code>. Dengan cara ini, kelas <code><strong>Phone</strong></code> bertanggung jawab untuk 
+                memformat nomor teleponnya sendiri, yang mengatasi masalah "Feature Envy" dalam kode. Kelas 
+                Customer sekarang hanya memanggil metode getFormattedNumber pada objek Phone untuk 
+                mendapatkan nomor telepon yang diformat.
+            </p>
+          </div>
+    </section>
+</body>
+</html>
