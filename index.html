@@ -357,36 +357,55 @@
                             <pre>
                                 <code>
                                     <strong>
-<span class="a">public class</span> <span class="b">Phone</span> <span class="c">{</span>
-    <span class="a">private final</span> <span class="d">String</span> <span class="b">unformattedNumber;</span>
+<span class="a">public class</span> <span class="b">Order</span> <span class="c">{</span>  
+    private Customer customer;
 
-    <span class="a">public</span> <span class="c">Phone</span><span class="g">(</span><span class="d">String</span> <span class="b">unformattedNumber</span><span class="g">)</span> <span class="g">{</span>
-        <span class="e">this</span><span class="b">.unformattedNumber</span> <span class="d">=</span> <span class="b">unformattedNumber;</span>
-    <span class="g">}</span> 
+    public Order(Customer customer) {
+        this.customer = customer;
+    }
 
-    <span class="a">public</span> <span class="d">String</span> <span class="c">getAreaCode</span><span class="g">()</span> <span class="g">{</span>
-        <span class="d">return</span> <span class="b">unformattedNumber.</span><span class="c">substring</span><span class="f">(</span><span class="c">0</span><span class="b">,</span><span class="c">3</span><span class="f">)</span><span class="b">;</span>
-    <span class="g">}</span> 
+    public String getCustomerAddress() {
+        return customer.getAddress().getStreet() + ", " 
+        + customer.getAddress().getCity() + ", " + 
+        customer.getAddress().getCountry();
+    }
+}
 
-    <span class="a">public</span> <span class="d">String</span> <span class="c">getPrefix</span><span class="g">()</span> <span class="g">{</span>
-        <span class="d">return</span> <span class="b">unformattedNumber.</span><span class="c">substring</span><span class="f">(</span><span class="c">3</span><span class="b">,</span><span class="c">6</span><span class="f">)</span><span class="b">;</span>
-    <span class="g">}</span> 
+<span class="a">public class</span> <span class="b">Customer</span> <span class="c">{</span> 
+    private Address address;
 
-    <span class="a">public</span> <span class="d">String</span> <span class="c">getNumber</span><span class="g">()</span> <span class="g">{</span>
-        <span class="d">return</span> <span class="b">unformattedNumber.</span><span class="c">substring</span><span class="f">(</span><span class="c">6</span><span class="b">,</span><span class="c">10</span><span class="f">)</span><span class="b">;</span>
-    <span class="g">}</span> 
-<span class="c">}</span>
+    public Customer(Address address) {
+        this.address = address;
+    }
 
-<span class="a">public class</span> <span class="b">Customer</span> <span class="c">{</span>
-    <span class="a">private</span> <span class="d">Phone</span> <span class="b">mobilePhone;</span>
+    public Address getAddress() {
+        return address;
+    }
+}
 
-    <span class="a">public</span> <span class="d">String</span> <span class="c">getMobilePhoneNumber</span><span class="g">()</span> <span class="g">{</span>
-        <span class="d">return</span> <span class="e">"("</span> <span class="d">+</span>
-            <span class="b">mobilePhone.</span><span class="c">getAreaCode</span><span class="a">()</span> <span class="d">+</span> <span class="e">") "</span> <span class="d">+</span>
-            <span class="b">mobilePhone.</span><span class="c">getPrefix</span><span class="a">()</span> <span class="d">+</span> <span class="e">"-"</span> <span class="d">+</span>
-            <span class="b">mobilePhone.</span><span class="c">getNumber</span><span class="a">()</span><span class="b">;</span>
-    <span class="g">}</span> 
-<span class="c">}</span>  
+<span class="a">public class</span> <span class="b">Address</span> <span class="c">{</span>
+    <span class="a">private</span> <span class="d">String</span> <span class="b">street;</span> 
+    <span class="a">private</span> <span class="d">String</span> <span class="b">city;</span> 
+    <span class="a">private</span> <span class="d">String</span> <span class="b">country;</span> 
+
+    public Address(String street, String city, String country) {
+        this.street = street;
+        this.city = city;
+        this.country = country;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+}
                                     </strong>        
                                 </code>
                             </pre>
@@ -402,37 +421,21 @@
                             <pre>
                                 <code>
                                     <strong>
- <span class="a">public class</span> <span class="b">Phone</span> <span class="c">{</span>
-    <span class="a">private final</span> <span class="d">String</span> <span class="b">unformattedNumber;</span>	
-    
-    <span class="a">public</span> <span class="c">Phone</span><span class="g">(</span><span class="d">String</span> <span class="b">unformattedNumber</span><span class="g">)</span> <span class="g">{</span>
-        <span class="e">this</span><span class="b">.unformattedNumber</span> <span class="d">=</span> <span class="b">unformattedNumber;</span>
-    <span class="g">}</span> 
-    
-    <span class="a">public</span> <span class="d">String</span> <span class="c">getAreaCode</span><span class="g">()</span> <span class="g">{</span>
-        <span class="d">return</span> <span class="b">unformattedNumber.</span><span class="c">substring</span><span class="f">(</span><span class="c">0</span><span class="b">,</span><span class="c">3</span><span class="f">)</span><span class="b">;</span>
-    <span class="g">}</span> 
-
-    <span class="a">public</span> <span class="d">String</span> <span class="c">getPrefix</span><span class="g">()</span> <span class="g">{</span>
-        <span class="d">return</span> <span class="b">unformattedNumber.</span><span class="c">substring</span><span class="f">(</span><span class="c">3</span><span class="b">,</span><span class="c">6</span><span class="f">)</span><span class="b">;</span>
-    <span class="g">}</span> 
-
-    <span class="a">public</span> <span class="d">String</span> <span class="c">getNumber</span><span class="g">()</span> <span class="g">{</span>
-        <span class="d">return</span> <span class="b">unformattedNumber.</span><span class="c">substring</span><span class="f">(</span><span class="c">6</span><span class="b">,</span><span class="c">10</span><span class="f">)</span><span class="b">;</span>
-    <span class="g">}</span> 
-        
-    <span class="a">public</span> <span class="d">String</span> <span class="c">getFormattedNumber</span><span class="g">()</span> <span class="g">{</span>
-        <span class="d">return</span> <span class="e">"("</span> <span class="d">+</span> <span class="c">getAreaCode</span><span class="a">()</span> <span class="d">+</span> <span class="e">") "</span> <span class="d">+</span> <span class="c">getPrefix</span><span class="a">()</span> <span class="d">+</span> <span class="e">"-"</span> <span class="d">+</span> <span class="c">getNumber</span><span class="a">()</span><span class="b">;</span> 
-    <span class="g">}</span>
-<span class="c">}</span>  
-
-<span class="a">public class</span> <span class="b">Customer</span> <span class="c">{</span>
-    <span class="a">private</span> <span class="d">Phone</span> <span class="b">mobilePhone;</span>	
-    
-    <span class="a">public</span> <span class="d">String</span> <span class="c">getMobilePhoneNumber</span><span class="g">()</span> <span class="g">{</span>
-        <span class="d">return</span> <span class="b">mobilePhone.</span><span class="c">getFormattedNumber</span><span class="a">()</span><span class="b">;</span>
-    <span class="g">}</span>
-<span class="c">}</span>                
+public class Address {
+         <span class="a">private</span> <span class="d">String</span> <span class="b">street;</span> 
+         <span class="a">private</span> <span class="d">String</span> <span class="b">city;</span> 
+         <span class="a">private</span> <span class="d">String</span> <span class="b">country;</span> 
+ 
+     public Address(String street, String city, String country) {
+         this.street = street;
+         this.city = city;
+         this.country = country;
+     }
+ 
+    public String getFullAddress() {
+        return street + ", " + city + ", " + 
+    }
+}
                                     </strong>                  
                                 </code>
                             </pre>
@@ -442,18 +445,17 @@
                 </div>
             </div>
             <p> 
-                Dalam contoh ini, kelas <code><strong>Customer</strong></code> menggunakan metode kelas Phone secara berlebihan, 
-                yang merupakan tanda "Feature Envy". Ini dapat menyebabkan tingkat keterikatan yang 
-                tinggi antara kedua kelas tersebut dan duplikasi kode yang tidak perlu.
+                Dalam contoh ini, Kelas Order perlu mendapatkan alamat pelanggan, sehingga ia memanggil metode getAddress() pada objek 
+                Customer, yang mengembalikan objek Address. Kemudian, kelas Order memanggil metode getStreet(), getCity(), dan 
+                getCountry() pada objek Address untuk mendapatkan bagian-bagian individu dari alamat tersebut. Ini adalah contoh dari 
+                rantai pesan, karena kelas Order melakukan beberapa pemanggilan metode pada objek lain untuk mendapatkan informasi yang
+                dibutuhkannya.
             </p>
             <p>
-                Untuk mengatasi masalah kode ini, salah satu solusinya adalah memindahkan metode 
-                <code><strong>getMobilePhoneNumber</strong></code> ke kelas <code><strong>Phone</strong></code> dan memodifikasinya 
-                agar mengembalikan nomor telepon yang diformat secara langsung. Kita memindahkan metode <code><strong>getFormattedNumber</strong></code> dari kelas 
-                <code><strong>Customer</strong></code> ke kelas <code><strong>Phone</strong></code>. Dengan cara ini, kelas <code><strong>Phone</strong></code> bertanggung jawab untuk 
-                memformat nomor teleponnya sendiri, yang mengatasi masalah "Feature Envy" dalam kode. Kelas 
-                Customer sekarang hanya memanggil metode getFormattedNumber pada objek Phone untuk 
-                mendapatkan nomor telepon yang diformat.
+                Untuk mengatasi masalah kode ini, kita bisa menambahkan sebuah metode ke kelas Address yang mengembalikan alamat lengkap 
+                sebagai string tunggal. Kemudian, Anda dapat memodifikasi kelas Order untuk memanggil metode baru ini daripada melakukan 
+                beberapa pemanggilan metode pada objek Address. Hal ini menghilangkan rantai pesan dan membuat kode lebih mudah dibaca 
+                dan dipelihara.
             </p>
           </div>
     </section>
