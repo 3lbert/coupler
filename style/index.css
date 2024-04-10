@@ -1,0 +1,51 @@
+@import "https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css";
+
+html{
+    scroll-behavior: smooth;
+}
+
+.main{
+    background-color: aquamarine;
+}
+
+p{
+    text-align: justify;
+}
+
+pre{
+    background-color: transparent;
+}
+
+.code-card{
+    position: relative;
+    width: 680px;
+    background-color: #030D22;
+}
+
+.a{
+    color: #0B70F1;
+}
+
+.b{
+    color: #FF2E97;
+}
+
+.c{
+    color: #FFC716;
+}
+
+.g{
+    color: #B170D6;
+}
+
+.e{
+    color: #23C8FF;
+}
+
+.f{
+    color: #0EF3F1;
+}
+
+.d{
+    color: #EF1BF0;
+}
