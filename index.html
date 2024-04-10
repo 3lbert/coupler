@@ -29,8 +29,10 @@
     <section class="section is-small main">
         <div class="content is-normal is-dark">
             <h2>The Coupler</h2>
-            <p> <strong>The Coupler </strong>adalah kelompok code smell yang menyebabkan keterikatan berlebihan antara kelas-kelas 
-                atau menunjukkan apa yang terjadi jika keterikatan digantikan oleh delegasi berlebihan.</p>
+            <p> 
+                <strong>The Coupler</strong>adalah kelompok code smell yang menyebabkan keterikatan berlebihan antara kelas-kelas 
+                atau menunjukkan apa yang terjadi jika keterikatan digantikan oleh delegasi berlebihan.
+            </p>
           </div>
     </section>
     <section class="section is-small" id="feature-envy">
@@ -360,22 +362,22 @@
 <span class="a">public class</span> <span class="b">Order</span> <span class="c">{</span>  
     <span class="a">private</span> <span class="d">Customer</span> <span class="b">customer;</span>  
 
-    <span class="a">public</span> <span class="c">Order</span> (Customer customer) {
+    <span class="a">public</span> <span class="c">Order</span> <span class="g">(</span><span class="d">Customer</span> <span class="b">customer</span><span class="g">)</span> <span class="g">{</span>
         this.customer = customer;
-    }
+    <span class="g">}</span>
 
-    public String getCustomerAddress() {
+    <span class="a">public</span> <span class="d">String</span> <span class="c">getCustomerAddress</span><span class="g">()</span> <span class="g">{</span>
         return customer.getAddress().getStreet() + ", " 
         + customer.getAddress().getCity() + ", " + 
         customer.getAddress().getCountry();
-    }
+    <span class="g">}</span>
 <span class="c">}</span>  
 
 <span class="a">public class</span> <span class="b">Customer</span> <span class="c">{</span> 
     <span class="a">private</span> <span class="d">Address</span> <span class="b">address;</span>	 
 
     <span class="a">public</span> Customer(Address address) {
-        this.address = <span class="b">address;</span>
+        <span class="e">this</span><span class="b">.address</span> <span class="d">=</span> <span class="b">address;</span>
     <span class="g">}</span>
 
     <span class="a">public</span> Address getAddress() {
@@ -427,11 +429,11 @@
     <span class="a">private</span> <span class="d">String</span> <span class="b">city;</span> 
     <span class="a">private</span> <span class="d">String</span> <span class="b">country;</span> 
  
-     public Address(String street, String city, String country) {
-         this.street = street;
-         this.city = city;
-         this.country = country;
-     }
+    <span class="a">public</span> <span class="c">Address</span> <span class="g">(</span><span class="d">String</span> <span class="b">street,</span> <span class="d">String</span> <span class="b">city,</span> <span class="d">String</span> <span class="b">country</span><span class="g">)</span> <span class="g">{</span>
+        <span class="e">this</span><span class="b">.street</span> <span class="d">=</span> <span class="b">street;</span>
+        <span class="e">this</span><span class="b">.city</span> <span class="d">=</span> <span class="b">city;</span> 
+        <span class="e">this</span><span class="b">.country</span> <span class="d">=</span> <span class="b">country;</span> 
+    <span class="g">}</span>
  
     public String getFullAddress() {
         return street + ", " + city + ", " + 
