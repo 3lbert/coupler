@@ -495,36 +495,19 @@
                             <pre>
                                 <code>
                                     <strong>
-<span class="a">public class</span> <span class="b">Phone</span> <span class="c">{</span>
-    <span class="a">private final</span> <span class="d">String</span> <span class="b">unformattedNumber;</span>
+class Order {
+    private OrderStatus orderStatus;
 
-    <span class="a">public</span> <span class="c">Phone</span><span class="g">(</span><span class="d">String</span> <span class="b">unformattedNumber</span><span class="g">)</span> <span class="g">{</span>
-        <span class="e">this</span><span class="b">.unformattedNumber</span> <span class="d">=</span> <span class="b">unformattedNumber;</span>
-    <span class="g">}</span> 
+    public boolean isOrderShipped() {
+        return orderStatus.isShipped();
+    }
+}
 
-    <span class="a">public</span> <span class="d">String</span> <span class="c">getAreaCode</span><span class="g">()</span> <span class="g">{</span>
-        <span class="d">return</span> <span class="b">unformattedNumber.</span><span class="c">substring</span><span class="f">(</span><span class="c">0</span><span class="b">,</span><span class="c">3</span><span class="f">)</span><span class="b">;</span>
-    <span class="g">}</span> 
-
-    <span class="a">public</span> <span class="d">String</span> <span class="c">getPrefix</span><span class="g">()</span> <span class="g">{</span>
-        <span class="d">return</span> <span class="b">unformattedNumber.</span><span class="c">substring</span><span class="f">(</span><span class="c">3</span><span class="b">,</span><span class="c">6</span><span class="f">)</span><span class="b">;</span>
-    <span class="g">}</span> 
-
-    <span class="a">public</span> <span class="d">String</span> <span class="c">getNumber</span><span class="g">()</span> <span class="g">{</span>
-        <span class="d">return</span> <span class="b">unformattedNumber.</span><span class="c">substring</span><span class="f">(</span><span class="c">6</span><span class="b">,</span><span class="c">10</span><span class="f">)</span><span class="b">;</span>
-    <span class="g">}</span> 
-<span class="c">}</span>
-
-<span class="a">public class</span> <span class="b">Customer</span> <span class="c">{</span>
-    <span class="a">private</span> <span class="d">Phone</span> <span class="b">mobilePhone;</span>
-
-    <span class="a">public</span> <span class="d">String</span> <span class="c">getMobilePhoneNumber</span><span class="g">()</span> <span class="g">{</span>
-        <span class="d">return</span> <span class="e">"("</span> <span class="d">+</span>
-            <span class="b">mobilePhone.</span><span class="c">getAreaCode</span><span class="a">()</span> <span class="d">+</span> <span class="e">") "</span> <span class="d">+</span>
-            <span class="b">mobilePhone.</span><span class="c">getPrefix</span><span class="a">()</span> <span class="d">+</span> <span class="e">"-"</span> <span class="d">+</span>
-            <span class="b">mobilePhone.</span><span class="c">getNumber</span><span class="a">()</span><span class="b">;</span>
-    <span class="g">}</span> 
-<span class="c">}</span>  
+class OrderStatus {
+    public boolean isShipped() {
+        // Check if the order is shipped
+    }
+}
                                     </strong>        
                                 </code>
                             </pre>
@@ -540,37 +523,23 @@
                             <pre>
                                 <code>
                                     <strong>
- <span class="a">public class</span> <span class="b">Phone</span> <span class="c">{</span>
-    <span class="a">private final</span> <span class="d">String</span> <span class="b">unformattedNumber;</span>	
-    
-    <span class="a">public</span> <span class="c">Phone</span><span class="g">(</span><span class="d">String</span> <span class="b">unformattedNumber</span><span class="g">)</span> <span class="g">{</span>
-        <span class="e">this</span><span class="b">.unformattedNumber</span> <span class="d">=</span> <span class="b">unformattedNumber;</span>
-    <span class="g">}</span> 
-    
-    <span class="a">public</span> <span class="d">String</span> <span class="c">getAreaCode</span><span class="g">()</span> <span class="g">{</span>
-        <span class="d">return</span> <span class="b">unformattedNumber.</span><span class="c">substring</span><span class="f">(</span><span class="c">0</span><span class="b">,</span><span class="c">3</span><span class="f">)</span><span class="b">;</span>
-    <span class="g">}</span> 
+class Order {
+    private OrderStatus orderStatus;
 
-    <span class="a">public</span> <span class="d">String</span> <span class="c">getPrefix</span><span class="g">()</span> <span class="g">{</span>
-        <span class="d">return</span> <span class="b">unformattedNumber.</span><span class="c">substring</span><span class="f">(</span><span class="c">3</span><span class="b">,</span><span class="c">6</span><span class="f">)</span><span class="b">;</span>
-    <span class="g">}</span> 
+    public boolean isShipped() {
+        return orderStatus.isShipped();
+    }
+}
 
-    <span class="a">public</span> <span class="d">String</span> <span class="c">getNumber</span><span class="g">()</span> <span class="g">{</span>
-        <span class="d">return</span> <span class="b">unformattedNumber.</span><span class="c">substring</span><span class="f">(</span><span class="c">6</span><span class="b">,</span><span class="c">10</span><span class="f">)</span><span class="b">;</span>
-    <span class="g">}</span> 
-        
-    <span class="a">public</span> <span class="d">String</span> <span class="c">getFormattedNumber</span><span class="g">()</span> <span class="g">{</span>
-        <span class="d">return</span> <span class="e">"("</span> <span class="d">+</span> <span class="c">getAreaCode</span><span class="a">()</span> <span class="d">+</span> <span class="e">") "</span> <span class="d">+</span> <span class="c">getPrefix</span><span class="a">()</span> <span class="d">+</span> <span class="e">"-"</span> <span class="d">+</span> <span class="c">getNumber</span><span class="a">()</span><span class="b">;</span> 
-    <span class="g">}</span>
-<span class="c">}</span>  
+class OrderStatus {
+    public boolean isShipped() {
+        // Check if the order is shipped
+    }
 
-<span class="a">public class</span> <span class="b">Customer</span> <span class="c">{</span>
-    <span class="a">private</span> <span class="d">Phone</span> <span class="b">mobilePhone;</span>	
-    
-    <span class="a">public</span> <span class="d">String</span> <span class="c">getMobilePhoneNumber</span><span class="g">()</span> <span class="g">{</span>
-        <span class="d">return</span> <span class="b">mobilePhone.</span><span class="c">getFormattedNumber</span><span class="a">()</span><span class="b">;</span>
-    <span class="g">}</span>
-<span class="c">}</span>                
+    public boolean isNotShipped() {
+        return !isShipped();
+    }
+}
                                     </strong>                  
                                 </code>
                             </pre>
@@ -580,18 +549,13 @@
                 </div>
             </div>
             <p> 
-                Dalam contoh ini, kelas <code><strong>Customer</strong></code> menggunakan metode kelas Phone secara berlebihan, 
-                yang merupakan tanda "Feature Envy". Ini dapat menyebabkan tingkat keterikatan yang 
-                tinggi antara kedua kelas tersebut dan duplikasi kode yang tidak perlu.
+                Dalam contoh ini, Kelas <code><strong>Order</strong></code> bertindak sebagai <strong>Middle Man</strong> dengan hanya mendelegasikan 
+                metode <code><strong>isShipped()</strong></code> ke objek <code><strong>OrderStatus</strong></code>.
             </p>
             <p>
-                Untuk mengatasi masalah kode ini, salah satu solusinya adalah memindahkan metode 
-                <code><strong>getMobilePhoneNumber</strong></code> ke kelas <code><strong>Phone</strong></code> dan memodifikasinya 
-                agar mengembalikan nomor telepon yang diformat secara langsung. Kita memindahkan metode <code><strong>getFormattedNumber</strong></code> dari kelas 
-                <code><strong>Customer</strong></code> ke kelas <code><strong>Phone</strong></code>. Dengan cara ini, kelas <code><strong>Phone</strong></code> bertanggung jawab untuk 
-                memformat nomor teleponnya sendiri, yang mengatasi masalah "Feature Envy" dalam kode. Kelas 
-                Customer sekarang hanya memanggil metode getFormattedNumber pada objek Phone untuk 
-                mendapatkan nomor telepon yang diformat.
+                kelas Order tidak lagi bertindak sebagai Middle Man karena memiliki tanggung jawab sendiri untuk memeriksa apakah pesanan sudah dikirim atau belum. 
+                Kelas OrderStatus juga menyediakan metode baru isNotShipped() untuk menghindari kebutuhan akan negasi dalam kode klien.
+
             </p>
           </div>
     </section>
