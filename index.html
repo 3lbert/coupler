@@ -367,8 +367,8 @@
     <span class="g">}</span>
 
     <span class="a">public</span> <span class="d">String</span> <span class="c">getCustomerAddress</span><span class="g">()</span> <span class="g">{</span>
-        return customer.getAddress().getStreet() + ", " 
-        + customer.getAddress().getCity() + ", " + 
+        <span class="d">return</span> <span class="b">customer.</span><span class="c">getAddress</span><span class="a">()</span><span class="b">.</span><span class="c">getStreet</span><span class="a">()</span> + <span class="e">", "</span> 
+        + customer.getAddress().getCity() + <span class="e">", "</span> + 
         customer.getAddress().getCountry();
     <span class="g">}</span>
 <span class="c">}</span>  
@@ -376,11 +376,11 @@
 <span class="a">public class</span> <span class="b">Customer</span> <span class="c">{</span> 
     <span class="a">private</span> <span class="d">Address</span> <span class="b">address;</span>	 
 
-    <span class="a">public</span> Customer(Address address) {
+    <span class="a">public</span> <span class="c">Customer</span> <span class="g">(</span><span class="d">Address</span> <span class="b">address</span><span class="g">)</span> <span class="g">{</span> 
         <span class="e">this</span><span class="b">.address</span> <span class="d">=</span> <span class="b">address;</span>
     <span class="g">}</span>
 
-    <span class="a">public</span> Address getAddress() {
+    <span class="a">public</span> <span class="d">Address</span> <span class="c">getAddress</span><span class="g">()</span> <span class="g">{</span>
         <span class="d">return</span> <span class="b">address;</span>
     <span class="g">}</span>
 <span class="c">}</span>  
@@ -436,7 +436,7 @@
     <span class="g">}</span>
  
     <span class="a">public</span> <span class="d">String</span> <span class="c">getFullAddress</span><span class="g">()</span> <span class="g">{</span>
-        return street + ", " + city + ", " + 
+        <span class="d">return</span> <span class="b">street</span> <span class="d">+</span> <span class="e">", "</span> <span class="d">+</span> <span class="b">city</span> <span class="d">+</span> <span class="e">", "</span> <span class="d">+</span> <span class="b">country;</span> 
     <span class="g">}</span>
 <span class="c">}</span>
                                     </strong>                  
