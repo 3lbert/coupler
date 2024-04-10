@@ -360,7 +360,7 @@
 <span class="a">public class</span> <span class="b">Order</span> <span class="c">{</span>  
     private Customer customer;
 
-    public Order(Customer customer) {
+    <span class="a">public</span> <span class="c">Order</span> (Customer customer) {
         this.customer = customer;
     }
 
@@ -374,38 +374,39 @@
 <span class="a">public class</span> <span class="b">Customer</span> <span class="c">{</span> 
     private Address address;
 
-    public Customer(Address address) {
-        this.address = address;
-    }
+    <span class="a">public</span> Customer(Address address) {
+        this.address = <span class="b">address;</span>
+    <span class="g">}</span>
 
-    public Address getAddress() {
-        return address;
-    }
-}
+    <span class="a">public</span> Address getAddress() {
+        <span class="d">return</span> <span class="b">address;</span>
+    <span class="g">}</span>
+<span class="c">}</span>  
 
 <span class="a">public class</span> <span class="b">Address</span> <span class="c">{</span>
     <span class="a">private</span> <span class="d">String</span> <span class="b">street;</span> 
     <span class="a">private</span> <span class="d">String</span> <span class="b">city;</span> 
     <span class="a">private</span> <span class="d">String</span> <span class="b">country;</span> 
 
-    public Address(String street, String city, String country) {
-        this.street = street;
-        this.city = city;
-        this.country = country;
-    }
+    <span class="a">public</span> <span class="c">Address</span> <span class="g">(</span><span class="d">String</span> <span class="b">street,</span> <span class="d">String</span> <span class="b">city,</span> <span class="d">String</span> <span class="b">country</span><span class="g">)</span> <span class="g">{</span>
+        <span class="e">this</span><span class="b">.street</span> <span class="d">=</span> <span class="b">street;</span>
+        <span class="e">this</span><span class="b">.city</span> <span class="d">=</span> <span class="b">city;</span> 
+        <span class="e">this</span><span class="b">.country</span> <span class="d">=</span> <span class="b">country;</span> 
+    <span class="g">}</span>
 
-    public String getStreet() {
-        return street;
-    }
+    <span class="a">public</span> <span class="d">String</span> <span class="c">getStreet</span><span class="g">()</span> <span class="g">{</span>
+        <span class="d">return</span> <span class="b">street;</span>
+    <span class="g">}</span>
+    
 
-    public String getCity() {
-        return city;
-    }
+    <span class="a">public</span> <span class="d">String</span> <span class="c">getCity</span><span class="g">()</span> <span class="g">{</span>
+        <span class="d">return</span> <span class="b">city;</span> 
+    <span class="g">}</span>
 
-    public String getCountry() {
-        return country;
-    }
-}
+    <span class="a">public</span> <span class="d">String</span> <span class="c">getCountry</span><span class="g">()</span> <span class="g">{</span>
+        <span class="d">return</span> <span class="b">country;</span> 
+    <span class="g">}</span>
+<span class="c">}</span>  
                                     </strong>        
                                 </code>
                             </pre>
