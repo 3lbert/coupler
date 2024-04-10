@@ -358,7 +358,7 @@
                                 <code>
                                     <strong>
 <span class="a">public class</span> <span class="b">Order</span> <span class="c">{</span>  
-    private Customer customer;
+    <span class="a">private</span> <span class="d">Customer</span> <span class="b">customer;</span>  
 
     <span class="a">public</span> <span class="c">Order</span> (Customer customer) {
         this.customer = customer;
@@ -369,10 +369,10 @@
         + customer.getAddress().getCity() + ", " + 
         customer.getAddress().getCountry();
     }
-}
+<span class="c">}</span>  
 
 <span class="a">public class</span> <span class="b">Customer</span> <span class="c">{</span> 
-    private Address address;
+    <span class="a">private</span> <span class="d">Address</span> <span class="b">address;</span>	 
 
     <span class="a">public</span> Customer(Address address) {
         this.address = <span class="b">address;</span>
