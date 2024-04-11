@@ -498,15 +498,15 @@
 <span class="a">class</span> <span class="b">Order</span> <span class="c">{</span>
     private OrderStatus orderStatus;
 
-    public boolean isOrderShipped() {
+    <span class="a">public</span> <span class="d">boolean</span> isOrderShipped() <span class="g">{</span>
         return orderStatus.isShipped();
-    }
+    <span class="g">}</span>
 <span class="c">}</span>
 
 <span class="a">class</span> <span class="b">OrderStatus</span> <span class="c">{</span>
-    public boolean isShipped() {
-        // Check if the order is shipped
-    }
+    <span class="a">public</span> <span class="d">boolean</span> <span class="c">isShipped</span><span class="g">()</span> <span class="g">{</span>
+       <span class="a">// Check if the order is shipped</span> 
+    <span class="g">}</span>
 <span class="c">}</span>
                                     </strong>        
                                 </code>
@@ -526,17 +526,17 @@
 <span class="a">class</span> <span class="b">Order</span> <span class="c">{</span>
     private OrderStatus orderStatus;
 
-    public boolean isShipped() {
+    <span class="a">public</span> boolean isShipped() {
         return orderStatus.isShipped();
     }
 <span class="c">}</span>
 
 <span class="a">class</span> <span class="b">OrderStatus</span> <span class="c">{</span>
-    public boolean isShipped() {
-        // Check if the order is shipped
-    }
+    <span class="a">public</span> <span class="d">boolean</span> <span class="c">isShipped</span><span class="g">()</span> <span class="g">{</span>
+       <span class="a">// Check if the order is shipped</span> 
+    <span class="g">}</span>
 
-    public boolean isNotShipped() {
+    <span class="a">public</span> <span class="d">boolean</span> isNotShipped() {
         return !isShipped();
     }
 <span class="c">}</span>
